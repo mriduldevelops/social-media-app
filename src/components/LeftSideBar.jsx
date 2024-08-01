@@ -8,12 +8,18 @@ import {
   LogIn,
 } from "lucide-react";
 import { Button } from "./ui/button";
-import { SignOutButton, SignInButton } from "@clerk/nextjs";
+// import { SignOutButton, SignInButton } from "@clerk/nextjs";
+
+import { useClerk } from "@clerk/nextjs";
 import { useUser } from "@clerk/nextjs";
+import Link from "next/link";
+
+
 function LeftSideBar() {
   const { user } = useUser();
+  const { signOut } = useClerk()
   return (
-    <div className="flex flex-col mx-2 my-6 gap-4">
+    <div className="hidden lg:flex flex-col mx-2 my-6 gap-4">
       <Button
         variant="ghost"
         className="flex items-center gap-2 w-full justify-start"
@@ -47,22 +53,25 @@ function LeftSideBar() {
       </Button>
       {user ? (
         <Button
+        onClick={() => signOut({ redirectUrl: '/' })}
           variant="ghost"
           className="flex items-center gap-2 w-full justify-start"
         >
           {" "}
           <LogOut color="#3B82F6" size={16} />
-          <SignOutButton />
+          Sign Out
         </Button>
       ) : (
+        <Link href={"/sign-in"}>
         <Button
           variant="ghost"
           className="flex items-center gap-2 w-full justify-start"
-        >
+          >
           {" "}
           <LogIn color="#3B82F6" size={16} />
-          <SignInButton />
+          Sign In
         </Button>
+          </Link>
       )}
     </div>
   );

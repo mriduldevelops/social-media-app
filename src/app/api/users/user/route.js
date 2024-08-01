@@ -17,13 +17,14 @@ export async function POST(request){
                 error: "user already exist with this username"
             },{status: 400})
         }
-
+        
         const newUser = new User({
             username, 
             fullname, 
             email, 
             imageURL
         })
+        // console.log(newUser)
         const savedUser = await newUser.save()
         console.log(savedUser)
         return NextResponse.json({
@@ -39,7 +40,8 @@ export async function POST(request){
 
 export async function GET() {
     try {
-        const users = await User.find();
+        
+        const users = await User.find({});
         return NextResponse.json({
             success: true,
             users
