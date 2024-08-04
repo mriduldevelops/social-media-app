@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "@/redux/postSlice";
 import Post from "./ui/Post";
-function PostList() {
+function PostList({ postUpdate }) {
   const [posts, setPosts] = useState([])
 
     const getAllPosts = async () => {
@@ -19,20 +19,10 @@ function PostList() {
 
     useEffect(() => {
       getAllPosts();
-    }, []);
+    }, [postUpdate]);
 
-//   const dispatch = useDispatch();
 
-//   const posts = useSelector((state) => state.posts.posts);
-//   const status = useSelector((state) => state.posts.status);
-
-//   useEffect(() => {
-//     if (status === "idle") {
-//       dispatch(fetchPosts());
-//     }
-//   }, [status, dispatch]);
-
-  console.log(posts);
+  // console.log(posts);
 
   return <div className="space-y-4 pt-4">
     {

@@ -4,17 +4,16 @@ import LeftSideBar from "@/components/LeftSideBar";
 import Navbar from "@/components/Navbar";
 import PostList from "@/components/PostList";
 import RightSideBar from "@/components/RightSideBar";
-import { Button } from "@/components/ui/button";
 import { fetchUser } from "@/redux/userSlice";
-import { SignOutButton, UserButton, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import axios from "axios";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
   const { user } = useUser();
-  const [username, setUsername] = useState("")
+  const [username, setUsername] = useState("");
+  const [postUpdate, setPostUpdate] = useState(false);
   const dispatch = useDispatch();
 
   const userInfo = useSelector((state) => state.user.userInfo);
@@ -29,6 +28,7 @@ export default function Home() {
   //   console.log(userInfo?.currentUser);
   // }
 
+  console.log(postUpdate);
   const addUser = async () => {
     try {
       const userInfo = {
@@ -45,7 +45,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    user && addUser() &&  setUsername(user.username);
+    user && addUser() && setUsername(user.username);
   }, [user]);
 
   useEffect(() => {
@@ -54,29 +54,22 @@ export default function Home() {
     }
   }, [status, dispatch, username]);
 
-
   return (
     <div>
       <Navbar />
       <div className="grid grid-cols-6 h-[92vh] ">
         <LeftSideBar />
         <div className="col-span-6 md:col-span-4 border-2 px-4 py-6 h-[96vh]  lg:h-[92vh] overflow-y-scroll no-scrollbar">
-          {user && <CreatePost currentUser={userInfo?.currentUser} />
-          }
-          <PostList/>
+          {userInfo?.currentUser && (
+            <CreatePost
+              currentUser={userInfo.currentUser}
+              onPostCreated={() => setPostUpdate(!postUpdate)}
+            />
+          )}
+          <PostList postUpdate={postUpdate} />
         </div>
         <RightSideBar />
       </div>
-      {/* <p>{user && user.primaryEmailAddress.emailAddress}</p>
-      <p>{user && user.username}</p>
-      <p>{user && user.fullName}</p>
-      <p>{user && user.imageUrl}</p>
-      {/* <p>{user&&user.createdAt.getFullYear}</p> */}
-      {/* <Link href="/sign-up">
-      <Button>New Account</Button>
-      </Link>
-      <SignOutButton/>
-      <Button onClick={getAllUsers}>Get Users</Button>  */}
     </div>
   );
 }

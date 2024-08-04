@@ -9,7 +9,6 @@ export async function POST(request) {
     const reqBody = await request.json();
     const { postText, imageURL, createdBy, createdAt } = reqBody;
 
-    
     const newPost = new Post({ postText, imageURL, createdBy, createdAt });
 
     const savedPost = await newPost.save();
@@ -31,7 +30,7 @@ export async function POST(request) {
 
 export async function GET(){
   try {
-    const posts = await Post.find().populate('createdBy');
+    const posts = await Post.find().populate('createdBy').sort({createdAt: -1});
     return NextResponse.json({
         success: true,
         posts
