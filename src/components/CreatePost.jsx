@@ -85,9 +85,12 @@
 import { SquarePen, Image, Video, SendHorizontal } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { Button } from "./ui/button";
+import { useToast } from "@/components/ui/use-toast"
+
 import axios from "axios";
 
 function CreatePost({ currentUser, onPostCreated }) {
+  const { toast } = useToast()
   const [post, setPost] = useState({
     postText: "",
     createdBy: currentUser ? currentUser._id : "",
@@ -106,6 +109,9 @@ function CreatePost({ currentUser, onPostCreated }) {
         const response = await axios.post("/api/users/posts", post);
         console.log("posted successfully", response.data);
         onPostCreated();
+        toast({
+          description: "Posted Successfully",
+        })
       }
     } catch (error) {
       console.log(error.message);

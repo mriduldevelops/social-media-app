@@ -21,7 +21,7 @@ function RightSideBar() {
   },[])
 
   return (
-    <div className='h-[92vh] overflow-scroll no-scrollbar hidden md:block'>
+    <div className='h-[92vh] overflow-scroll no-scrollbar hidden md:block md:col-span-2 lg:col-span-1'>
       <div className='border-b-2 p-2'>
       <h6 className='text-sm font-bold'>All Users</h6>
       </div>

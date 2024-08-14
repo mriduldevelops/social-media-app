@@ -37,10 +37,18 @@ const postSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  likes: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "users",
-  }]
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+    },
+  ],
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "comments",
+    },
+  ],
 });
 
 const POST = mongoose.models.posts || mongoose.model("posts", postSchema);

@@ -28,7 +28,7 @@ export default function Home() {
   //   console.log(userInfo?.currentUser);
   // }
 
-  console.log(postUpdate);
+  // console.log(postUpdate);
   const addUser = async () => {
     try {
       const userInfo = {
@@ -60,7 +60,7 @@ export default function Home() {
       <div className="grid grid-cols-6 h-[92vh] ">
         <LeftSideBar />
         <div className="col-span-6 md:col-span-4 border-2 px-4 py-6 h-[96vh]  lg:h-[92vh] overflow-y-scroll no-scrollbar">
-          {userInfo?.currentUser && (
+          {user && userInfo?.currentUser && (
             <CreatePost
               currentUser={userInfo.currentUser}
               onPostCreated={() => setPostUpdate(!postUpdate)}
